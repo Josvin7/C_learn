@@ -1,31 +1,38 @@
 #include<stdio.h>
 #include<windows.h>
 int strStr(char * haystack, char * needle){
-	int count = 0;
+	int lenh = strlen(haystack);
+	int lenn = strlen(needle);
+	int count = -1;
 	
-	while (*haystack != '\0')
-	{
-
-		while (*haystack != '\0' && *haystack != *needle) {
-			haystack++;
-			count++;
+	int i = 0;
+	int j = 0;
+	while (i < lenh && j < lenn) {
+		if (haystack[i] != needle[j]) {
+			if (count >= 0) {
+				j = 0;// »ØÍË
+				i = count + 1;
+				count = -1;
+			}
+			else {
+				i++;
+			}
+			
 		}
-		int j = 0;
-		while (*haystack != '\0' && *haystack == *needle){
-			haystack++;
-			needle++;
-			j++;
-		}
-		if (*needle == '\0') {
-			return count;
-		}
-		count += j;
-		needle -= j;
-		j = 0;
+		else {
+			if (count < 0) {
+				count = i;
+			}
+				j++;
+				i++;
 
-
+			
+		}
 	}
-	return -1;
+	if (j < lenn) {
+		return count;
+	}
+	return - 1;
 
 }
 int main() {
